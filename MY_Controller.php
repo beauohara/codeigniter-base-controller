@@ -8,7 +8,7 @@
  * @subpackage MY_Controller
  * @license GPLv3 <http://www.gnu.org/licenses/gpl-3.0.txt>
  * @link http://github.com/jamierumbelow/codeigniter-base-controller
- * @version 1.1.0
+ * @version 1.1.1
  * @author Jamie Rumbelow <http://jamierumbelow.net>
  * @copyright Copyright (c) 2009, Jamie Rumbelow <http://jamierumbelow.net>
  */
@@ -66,6 +66,15 @@ class MY_Controller extends Controller {
 	 * @var array
 	 */
 	protected $models = array();
+	
+	/**
+	 * The prerendered data for output buffering
+	 * and the render() method. Generally left blank.
+	 *
+	 * @since 1.1.1
+	 * @var string
+	 */
+	protected $prerendered_data = '';
 	
 	/**
 	 * The class constructor, loads the models
