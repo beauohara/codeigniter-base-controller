@@ -171,7 +171,7 @@ class MY_Controller extends Controller {
 	 * @author Jamie Rumbelow
 	 */
 	protected function is_ajax() {
-		return ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ? TRUE : FALSE;
+		return ($this->input->server('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest') ? TRUE : FALSE;
 	}
 	
 	/**
