@@ -29,7 +29,7 @@ class MY_Controller extends Controller {
 	 *
 	 * @var array
 	 */
-	protected $data;
+	protected $data = array();
 	
 	/**
 	 * The layout to load the view into. Only
