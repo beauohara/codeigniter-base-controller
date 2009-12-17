@@ -68,6 +68,18 @@ class MY_Controller extends Controller {
 	protected $models = array();
 	
 	/**
+	 * The model name formatting string. Use the
+	 * % symbol, which will be replaced with the model
+	 * name. This allows you to use model names like
+	 * m_model, model_m or model_model_m. Do whatever
+	 * suits you.
+	 *
+	 * @since 1.2.0
+	 * @var string
+	 */
+	protected $model_string = '%_model';
+	
+	/**
 	 * The prerendered data for output buffering
 	 * and the render() method. Generally left blank.
 	 *
@@ -99,7 +111,16 @@ class MY_Controller extends Controller {
 	 * @author Jamie Rumbelow
 	 */
 	public function _remap($method) {
-		call_user_func_array(array($this, $method), array_slice($this->uri->rsegments, 2));
+		if (method_exists($this, $method)) {
+			call_user_func_array(array($this, $method), array_slice($this->uri->rsegments, 2));
+		} else {
+			if (method_exists($this, '_404')) {
+				call_user_func_array(array($this, '_404'), array($method));	
+			} else {
+				show_404(strtolower(get_class($this)).'/'.$method);
+			}
+		}
+		
 		$this->_load_view();
 	}
 	
@@ -148,8 +169,21 @@ class MY_Controller extends Controller {
 	 */
 	private function _load_models() {
 	  foreach ($this->models as $model) {
-	    $this->load->model($model.'_model', $model, TRUE);
+	    $this->load->model($this->_model_name($model), $model, TRUE);
 	  }
+	}
+	
+	/**
+	 * Returns the correct model name to load with, by
+	 * replacing the % symbol in $this->model_string.
+	 *
+	 * @param string $model The name of the model
+	 * @return string
+	 * @since 1.2.0
+	 * @author Jamie Rumbelow
+	 */
+	protected function _model_name($model) {
+		return str_replace('%', $model, $this->model_string);
 	}
 	
 	/**
@@ -207,7 +241,7 @@ class MY_Controller extends Controller {
 		} else {
 			if ($loop == TRUE) {
 				foreach ($data as $row) {
-					return $this->load->view($name, (array)$data, TRUE);
+					return $this->load->view($name, (array)$row, TRUE);
 				}
 			} else {
 				return $this->load->view($name, $data, TRUE);

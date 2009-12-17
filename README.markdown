@@ -30,17 +30,17 @@ Model Loading
 
 Set the _$this->models_ instance variable in your controller to be an array of all the models you want to load and this class will loop through that array, loading each one sequentially. It looks for the model with a filename of _$model\_name\_model.php_ and the class name of _$model\_name\_model_, but will load the model into the CI super object under _$model\_name_. For instance, if my _$this->models_ array had a _'game'_ model, it would look for the file and class _Game\_model_ but will load it to _$this->game_.
 
-Upcoming Features
------------------
+You can customise the suffix or prefix of the model name by setting the $this->model\_string variable. Use the % symbol, which will be replaced with the model you want to load.
 
-* More customisable options
-* Custom model names
-* Better support for layout partials (sidebars)
-* Automagic Library Loading
+Custom 404 Messages
+-------------------
+
+If you try to call a method that doesn't exist, the class will first look for a \_404 method in your controller. This method will be passed the method that you're trying to call. Otherwise, it will display a default CodeIgniter 404 message.
 
 Version History
 ---------------
 
+* 1.2.0 A bugfix, support for custom model names and custom 404 messages.
 * 1.1.1 $this->data is now passed to layout, after the view is rendered
 * 1.1.0 Partial support, asides and an improvement to documentation
 * 1.0.5 Added support for multiple view rendering.
