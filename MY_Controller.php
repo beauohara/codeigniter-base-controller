@@ -136,7 +136,7 @@ class MY_Controller extends Controller {
 	 */
 	private function _load_view() {
 		if ($this->view !== FALSE) {
-			$view = ($this->view !== null) ? $this->view . '.php' : $this->router->class . '/' . $this->router->method . '.php';
+			$view = ($this->view !== null) ? $this->view . '.php' : $this->router->directory . $this->router->class . '/' . $this->router->method . '.php';
 	
 			$data['yield'] =  $this->prerendered_data;
 			$data['yield'] .= $this->load->view($view, $this->data, TRUE);
