@@ -234,19 +234,22 @@ class MY_Controller extends Controller {
 	 * @author Jamie Rumbelow and Jeremy Gimbel
 	 */
 	public function partial($name, $data = null, $loop = TRUE) {
+		$partial = '';
 		$name = $this->partial . '/' . $name;
 		
 		if (!isset($data)) {
-			return $this->load->view($name, array(), TRUE);
+			$partial = $this->load->view($name, array(), TRUE);
 		} else {
 			if ($loop == TRUE) {
 				foreach ($data as $row) {
-					return $this->load->view($name, (array)$row, TRUE);
+					$partial.= $this->load->view($name, (array)$row, TRUE);
 				}
 			} else {
-				return $this->load->view($name, $data, TRUE);
+				$partial.= $this->load->view($name, $data, TRUE);
 			}
 		}
+		
+		return $partial;
 	}
 	
 }
